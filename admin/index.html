@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Admin Panel</title>
+	<style type="text/css">
+		.admin{
+			padding: 20px 0;
+		}
+		.centre{
+			text-align: center;
+		}
+		.container {
+			display: flex;
+			justify-content: space-evenly;
+			align-items: center;
+			height: 130px;
+		}
+		.item {
+			width: 120px;
+			height: 120px;
+			margin: auto;
+		}
+		img{
+			width: 80px;
+			height: 80px;
+			display: block;
+			margin: 0 auto 4px;
+		}
+	</style>
+</head>
+	<body>
+		<h1 class="admin centre">ADMIN PANEL</h1>
+		<h2 class="centre">MySQL</h2>
+		<div class="container">
+			<a href="./phpmyadmin/" class="item centre">
+				<img src="./img/mysql.png">
+				<span>PHPMYADMIN</span>
+			</a>
+			<a href="./adminer/" class="item centre">
+				<img src="./img/adminer.png">
+				<span>Adminer</span>
+			</a>
+		</div>
+		<h2 class="centre">File Managers</h2>
+		<div class="container">
+			<a href="./filemanager" class="item centre">
+				<img src="./img/file.png">
+				<span>Simple Manager</span>
+			</a>
+			<a href="./net2ftp" class="item centre">
+				<img src="./img/ftp.png">
+				<span>NET2FTP</span>
+			</a>
+		</div>
+		<h2 class="centre">PHP</h2>
+		<div class="container">
+			<a href="./phpinfo.php" class="item centre">
+				<img src="./img/php.png">
+				<span>Php Info</span>
+			</a>
+		</div>
+	</body>
+</html>
