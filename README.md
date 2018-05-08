@@ -24,9 +24,9 @@ This Setup is tested with Google CDN and Amazon CloudFront CDN.
 
 #### How to install
 ```
-sudo git clone https://github.com/hareeshr/wordpress-serverstack-for-frontend-cdn
-sudo chmod 755 wordpress-serverstack-for-frontend-cdn/install.sh
-sudo ./wordpress-serverstack-for-frontend-cdn/install.sh
+sudo git clone https://github.com/hareeshr/wp-serverstack
+sudo chmod 755 wp-serverstack/install.sh
+sudo ./wp-serverstack/install.sh
 ```
 
 #### Parameters
