@@ -1,0 +1,131 @@
+fastcgi_cache_path /etc/nginx/cache levels=1:2 keys_zone=mywp:100m inactive=60m;
+fastcgi_cache_key "$scheme$request_method$host$request_uri";
+fastcgi_cache_lock on;
+fastcgi_cache_use_stale error timeout invalid_header updating http_500;
+#fastcgi_cache_valid 200 301 302 60m;
+fastcgi_cache_valid 60m;
+#fastcgi_cache_use_stale error timeout invalid_header http_500;
+fastcgi_ignore_headers Cache-Control Expires Set-Cookie;
+
+add_header X-Cache $upstream_cache_status;
+
+server {
+	listen 80;
+	listen [::]:80;
+#	server_name example.com www.example.com;
+#	return 301 https://example.com$request_uri;
+#}
+#server {
+	listen 443 ssl http2 default_server;
+	listen [::]:443 ssl http2 default_server;
+	server_name example.com www.example.com;
+
+	include snippets/ssl-example.com.conf;
+	include snippets/ssl-params.conf;
+
+	root /var/www/html;
+
+	set $skip_cache 0;
+	# POST requests and url's with a query string should always skip cache
+	if ($request_method = POST) {
+		set $skip_cache 1;
+	}
+	if ($query_string != "") {
+		set $skip_cache 1;
+	}
+	# Don't cache url's containing the following segments
+	if ($request_uri ~* "/wp-admin/|/xmlrpc.php|wp-.*.php|/feed/|index.php|sitemap(_index)?.xml") {
+		set $skip_cache 1;
+	}
+	# Don't use the cache for logged in users or recent commenters
+	if ($http_cookie ~* "comment_author|wordpress_[a-f0-9]+|wp-postpass|wordpress_no_cache|wordpress_logged_in") {
+		set $skip_cache 1;
+	}
+
+	location ~ \.php$ {
+		fastcgi_split_path_info ^(.+\.php)(/.+)$;
+		fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
+		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+		try_files $uri =404;
+		fastcgi_index index.php;
+		fastcgi_cache_bypass $skip_cache;
+		fastcgi_no_cache $skip_cache;
+		fastcgi_cache mywp;
+		include fastcgi_params;
+	}
+
+	index index.php index.html index.htm index.nginx-debian.html;
+
+	location / {
+		try_files $uri $uri/ /index.php?$args;
+	}
+ 	location ~* \.(eot|ttf|woff|woff2|svg)$ {
+		add_header Access-Control-Allow-Origin '*';
+   	expires 31536000s;
+   	add_header Pragma "public";
+   	add_header Cache-Control "max-age=31536000, public";
+   	try_files $uri $uri/ $uri.html /index.php?$args;
+	}
+
+  #w3tc nginx config file
+	#include /var/www/html/nginx.conf;
+  #location = /var/www/html/nginx.conf {
+  #  deny all;
+  #}
+
+	#All images in uploads
+	location ~ "^(.*)/wp-content/uploads/(.*)$" {
+		expires 31536000s;
+		add_header Pragma "public";
+		add_header Cache-Control "max-age=31536000, public";
+		try_files $uri $uri/ $uri.html /index.php?$args;
+	}
+
+	location ~* \.(eot|ttf|woff|woff2|svg|css|js|jpg|webp|png)$ {
+		if ($http_cookie !~ "wordpress_logged_in") {
+			expires 31536000s;
+			add_header Pragma "public";
+			add_header Cache-Control "max-age=31536000, public";
+		}
+	}
+
+  # for LetsEncrypt
+  location ~/.well-known {
+          allow all;
+  }
+
+	include /var/www/html/nginx-redirect.conf;
+	location ~ /(\.|nginx-redirect.conf|nginx-referral.conf) {
+    deny all;
+  }
+	if ($bad_referer) {
+		return 444;
+	}
+}
+server {
+	listen 5062;
+	listen [::]:5062;
+
+	include snippets/ssl-example.com.conf;
+	include snippets/ssl-params.conf;
+
+	root /var/www/admin;
+	index index.php index.html index.htm;
+	server_name tools.example.com;
+	location ~ \.php$ {
+	  fastcgi_split_path_info ^(.+\.php)(/.+)$;
+	  fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
+	  fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+	  try_files $uri =404;
+	  fastcgi_index index.php;
+	  include fastcgi_params;
+	}
+	location / {
+		try_files $uri $uri/ /index.php?q=$uri&args;
+		auth_basic "Restricted Content";
+		auth_basic_user_file /var/www/admin/.htpasswd;
+	}
+	location ~/.well-known {
+		allow all;
+	}
+}
