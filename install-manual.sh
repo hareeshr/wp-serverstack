@@ -85,6 +85,14 @@ cd /
 sudo cp /tmp/wp-serverstack/admin/* /var/www/admin
 sudo echo "<?php phpinfo();?>" | sudo tee -a /var/www/admin/phpinfo.php
 
+########## Lets Encrypt Installation #################
+
+sudo apt-get update
+sudo apt-get install software-properties-common -y
+sudo add-apt-repository ppa:certbot/certbot -y
+sudo apt-get update
+sudo apt-get install certbot -y
+
 
 ############################################
 ############## Configuration ###############
