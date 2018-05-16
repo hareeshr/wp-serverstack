@@ -29,6 +29,10 @@ sudo chmod 755 wp-serverstack/install.sh
 sudo ./wp-serverstack/install.sh
 ```
 
+Note: To install manually(Interactive mode):
+- clone this repository
+- open -manual.sh file and copy-paste blocks of code with relevant changes in ssh client
+
 #### Parameters
 The script uses several parameters to setup your server
 for example: the website name, FTP username, Database Name
