@@ -102,9 +102,11 @@ sudo cp /tmp/wp-serverstack/nginx/sites-available/default /etc/nginx/sites-avail
 sudo cp /tmp/wp-serverstack/nginx/snippets/* /etc/nginx/snippets/
 sudo cp /tmp/wp-serverstack/html/* /var/www/html
 #Edit website name
-#change website to your domain
+#change website.com to your domain.com
 sudo sed -i "s/example.com/website.com/g" /etc/nginx/sites-available/default
 sudo sed -i "s/example.com/website.com/g" /etc/nginx/snippets/ssl-website.com.conf
+#change admin to your subdomain
+sudo sed -i "s/tools/admin/g" /etc/nginx/sites-available/default
 #change example to your domain
 sudo mv /etc/nginx/snippets/ssl-example.com.conf /etc/nginx/snippets/ssl-example.com.conf
 #Make cache directory

@@ -44,6 +44,7 @@ for example: the website name, FTP username, Database Name
 | -dbg or --dbglobal  | Boolean | Database Global Access - Do the user have access to all databases? | false |
 | -ftpu or --ftpuser  | String | FTP Username | ftpuser |
 | -ftpp or --ftppass  | String | FTP Password | ftppass |
+| -asd or --adminsd  | String | Admin SubDomain | tools |
 | -au or --adminuser  | String | Admin Username | adminname |
 | -ap or --adminpass  | String | Admin Password | adminpass |
 
