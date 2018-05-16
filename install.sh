@@ -189,10 +189,10 @@ sudo echo "<?php phpinfo();?>" | sudo tee -a /var/www/admin/phpinfo.php
 sudo mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.old
 sudo mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default.old
 #Copy new config files
-sudo cp "$DIR"/server/nginx/nginx.conf /etc/nginx/
-sudo cp "$DIR"/server/nginx/sites-available/default /etc/nginx/sites-available/
-sudo cp "$DIR"/server/nginx/snippets/* /etc/nginx/snippets/
-sudo cp "$DIR"/server/html/* /var/www/html
+sudo cp "$DIR"/nginx/nginx.conf /etc/nginx/
+sudo cp "$DIR"/nginx/sites-available/default /etc/nginx/sites-available/
+sudo cp "$DIR"/nginx/snippets/* /etc/nginx/snippets/
+sudo cp "$DIR"/html/* /var/www/html
 #Edit website name
 sudo sed -i "s/example.com/$WEBSITE/g" /etc/nginx/sites-available/default
 sudo sed -i "s/example.com/$WEBSITE/g" /etc/nginx/snippets/ssl-example.com.conf
@@ -238,7 +238,7 @@ cd /
 ########## Php Config ######################
 
 sudo mv /etc/php/7.2/fpm/php.ini /etc/php/7.2/fpm/php.ini.old
-sudo cp "$DIR"/server/php/php.ini /etc/php/7.2/fpm/
+sudo cp "$DIR"/php/php.ini /etc/php/7.2/fpm/
 sudo service php7.2-fpm restart
 
 ########## Add FTP USER ####################
@@ -254,7 +254,7 @@ sudo chmod -R g+w /var/www
 
 sudo openssl req -x509 -nodes -newkey rsa:2048 -keyout /etc/ssl/private/vsftpdserverkey.pem -out /etc/ssl/certs/vsftpdcertificate.pem -days 365
 sudo mv /etc/vsftpd.conf /etc/vsftpd.conf.old
-sudo cp "$DIR"/server/vsftpd/vsftpd.conf /etc/
+sudo cp "$DIR"/vsftpd/vsftpd.conf /etc/
 sudo echo "$FTP_USER" | sudo tee -a /etc/vsftpd.userlist
 sudo sed -i "s/<ip_address>/$IP/g" /etc/vsftpd.conf
 sudo service vsftpd restart
