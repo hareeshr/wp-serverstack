@@ -2,20 +2,18 @@ fastcgi_cache_path /etc/nginx/cache levels=1:2 keys_zone=mywp:100m inactive=60m;
 fastcgi_cache_key "$scheme$request_method$host$request_uri";
 fastcgi_cache_lock on;
 fastcgi_cache_use_stale error timeout invalid_header updating http_500;
-#fastcgi_cache_valid 200 301 302 60m;
+fastcgi_cache_valid 200 301 302 60m;
 fastcgi_cache_valid 60m;
-#fastcgi_cache_use_stale error timeout invalid_header http_500;
+fastcgi_cache_use_stale error timeout invalid_header http_500;
 fastcgi_ignore_headers Cache-Control Expires Set-Cookie;
-
-add_header X-Cache $upstream_cache_status;
 
 server {
 	listen 80;
 	listen [::]:80;
-#	server_name example.com www.example.com;
-#	return 301 https://example.com$request_uri;
-#}
-#server {
+	server_name example.com www.example.com;
+	return 301 https://example.com$request_uri;
+}
+server {
 	listen 443 ssl http2 default_server;
 	listen [::]:443 ssl http2 default_server;
 	server_name example.com www.example.com;
@@ -25,6 +23,18 @@ server {
 
 	root /var/www/html;
 
+	index index.php index.html index.htm index.nginx-debian.html;
+
+	location / {
+		try_files $uri $uri/ /index.php?$args;
+	}
+ 	location ~* \.(eot|ttf|woff|woff2|svg)$ {
+		add_header Access-Control-Allow-Origin '*';
+   	expires 31536000s;
+   	add_header Pragma "public";
+   	add_header Cache-Control "max-age=31536000, public";
+   	try_files $uri $uri/ $uri.html /index.php?$args;
+	}
 	set $skip_cache 0;
 	# POST requests and url's with a query string should always skip cache
 	if ($request_method = POST) {
@@ -52,19 +62,7 @@ server {
 		fastcgi_no_cache $skip_cache;
 		fastcgi_cache mywp;
 		include fastcgi_params;
-	}
-
-	index index.php index.html index.htm index.nginx-debian.html;
-
-	location / {
-		try_files $uri $uri/ /index.php?$args;
-	}
- 	location ~* \.(eot|ttf|woff|woff2|svg)$ {
-		add_header Access-Control-Allow-Origin '*';
-   	expires 31536000s;
-   	add_header Pragma "public";
-   	add_header Cache-Control "max-age=31536000, public";
-   	try_files $uri $uri/ $uri.html /index.php?$args;
+		add_header X-ng-Cache $upstream_cache_status;
 	}
 
   #w3tc nginx config file
@@ -89,15 +87,15 @@ server {
 		}
 	}
 
-  # for LetsEncrypt
-  location ~/.well-known {
-          allow all;
-  }
+	 # for LetsEncrypt
+	 location ~/.well-known {
+	 	allow all;
+	 }
 
 	include /var/www/html/nginx-redirect.conf;
-	location ~ /(\.|nginx-redirect.conf|nginx-referral.conf) {
-    deny all;
-  }
+		location ~ /(\.|nginx-redirect.conf|nginx-referral.conf) {
+	    deny all;
+	}
 	if ($bad_referer) {
 		return 444;
 	}
@@ -113,12 +111,12 @@ server {
 	index index.php index.html index.htm;
 	server_name tools.example.com;
 	location ~ \.php$ {
-	  fastcgi_split_path_info ^(.+\.php)(/.+)$;
-	  fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
-	  fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-	  try_files $uri =404;
-	  fastcgi_index index.php;
-	  include fastcgi_params;
+		fastcgi_split_path_info ^(.+\.php)(/.+)$;
+		fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
+		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+		try_files $uri =404;
+		fastcgi_index index.php;
+		include fastcgi_params;
 	}
 	location / {
 		try_files $uri $uri/ /index.php?q=$uri&args;
