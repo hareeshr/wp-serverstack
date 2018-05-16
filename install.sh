@@ -136,13 +136,6 @@ sudo apt-get install vsftpd
 
 ########## Install PHPMYADMIN ##############
 
-#echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect none" | debconf-set-selections
-#echo "phpmyadmin phpmyadmin/dbconfig-install boolean false" | debconf-set-selections
-#sudo apt-get install phpmyadmin php-gettext -y
-#sudo ln -s /usr/share/phpmyadmin /var/www/admin
-
-########## Install PHPMYADMIN ##############
-
 sudo mkdir /var/www/admin/phpmyadmin
 cd /var/www/admin/phpmyadmin
 sudo wget -c https://files.phpmyadmin.net/phpMyAdmin/4.8.0.1/phpMyAdmin-4.8.0.1-english.zip -O phpmyadmin.zip
