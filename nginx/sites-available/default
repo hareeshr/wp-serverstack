@@ -117,6 +117,7 @@ server {
 		auth_basic_user_file /var/www/admin/.htpasswd;
 	}
 	location ~/.well-known {
+		auth_basic off
 		allow all;
 	}
 }
