@@ -112,12 +112,11 @@ sudo cp /tmp/wp-serverstack/html/* /var/www/html
 #Edit website name
 #change website.com to your domain.com
 sudo sed -i "s/example.com/website.com/g" /etc/nginx/sites-available/default
-sudo sed -i "s/example.com/website.com/g" /etc/nginx/snippets/ssl-website.com.conf
 sudo sed -i "s/example.com/website.com/g" /etc/nginx/snippets/ssl-example.com.conf
 #change admin to your subdomain
 sudo sed -i "s/tools/admin/g" /etc/nginx/sites-available/default
-#change example to your domain
-sudo mv /etc/nginx/snippets/ssl-example.com.conf /etc/nginx/snippets/ssl-example.com.conf
+#change website to your domain
+sudo mv /etc/nginx/snippets/ssl-example.com.conf /etc/nginx/snippets/ssl-website.com.conf
 #Make cache directory
 sudo mkdir /etc/nginx/cache
 sudo chown -R www-data:www-data /etc/nginx/cache
@@ -141,7 +140,7 @@ sudo mysql -u root
 #if you want to grant permission to one database
 -> GRANT ALL ON db_name.* TO 'db_user'@'localhost' IDENTIFIED BY 'db_pass' WITH GRANT OPTION;
 -> FLUSH PRIVILEGES;
-
+-> EXIT;
 
 ########## Download WordPress ##############
 
