@@ -113,6 +113,7 @@ sudo cp /tmp/wp-serverstack/html/* /var/www/html
 #change website.com to your domain.com
 sudo sed -i "s/example.com/website.com/g" /etc/nginx/sites-available/default
 sudo sed -i "s/example.com/website.com/g" /etc/nginx/snippets/ssl-website.com.conf
+sudo sed -i "s/example.com/website.com/g" /etc/nginx/snippets/ssl-example.com.conf
 #change admin to your subdomain
 sudo sed -i "s/tools/admin/g" /etc/nginx/sites-available/default
 #change example to your domain
