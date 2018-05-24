@@ -40,7 +40,7 @@ sudo apt-get install php7.2-fpm php7.2-common php7.2-mbstring php7.2-xmlrpc php7
 
 ########## Install VSFTPD ##################
 
-sudo apt-get install vsftpd
+sudo apt-get install vsftpd -y
 
 ########## Install PHPMYADMIN ##############
 
