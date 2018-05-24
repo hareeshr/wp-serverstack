@@ -10,13 +10,13 @@ fastcgi_ignore_headers Cache-Control Expires Set-Cookie;
 server {
 	listen 80;
 	listen [::]:80;
-	server_name example.com www.example.com;
+	server_name example.com www.example.com origin.example.com;
 	return 301 https://example.com$request_uri;
 }
 server {
 	listen 443 ssl http2 default_server;
 	listen [::]:443 ssl http2 default_server;
-	server_name example.com www.example.com;
+	server_name example.com www.example.com origin.example.com;
 
 	include snippets/ssl-example.com.conf;
 	include snippets/ssl-params.conf;
@@ -27,13 +27,6 @@ server {
 
 	location / {
 		try_files $uri $uri/ /index.php?$args;
-	}
- 	location ~* \.(eot|ttf|woff|woff2|svg)$ {
-		add_header Access-Control-Allow-Origin '*';
-   	expires 31536000s;
-   	add_header Pragma "public";
-   	add_header Cache-Control "max-age=31536000, public";
-   	try_files $uri $uri/ $uri.html /index.php?$args;
 	}
 	set $skip_cache 0;
 	# POST requests and url's with a query string should always skip cache
@@ -65,11 +58,11 @@ server {
 		add_header X-ng-Cache $upstream_cache_status;
 	}
 
-  #w3tc nginx config file
+	#w3tc nginx config file
 	#include /var/www/html/nginx.conf;
-  #location = /var/www/html/nginx.conf {
-  #  deny all;
-  #}
+	#location = /var/www/html/nginx.conf {
+	#	deny all;
+	#}
 
 	#All images in uploads
 	location ~ "^(.*)/wp-content/uploads/(.*)$" {
