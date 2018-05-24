@@ -82,7 +82,7 @@ cd /
 
 ########## Custom Admin Panel ######################
 
-sudo cp /tmp/wp-serverstack/admin/* /var/www/admin
+sudo cp -r /tmp/wp-serverstack/admin/* /var/www/admin
 sudo echo "<?php phpinfo();?>" | sudo tee -a /var/www/admin/phpinfo.php
 
 ########## Lets Encrypt Installation #################
