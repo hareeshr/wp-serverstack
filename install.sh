@@ -1,7 +1,7 @@
 ########## Variables ####################
 
 #"$DIR/path/to/file"
-DIR=$(cd -P -- "$(dirname -- "$0")" && pwd -P)3
+DIR=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
 
 #default website
 WEBSITE="example.com"
