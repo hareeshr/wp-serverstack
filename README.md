@@ -80,3 +80,48 @@ https:tools.example.com:5062
 
 Control Panel is secured by Basic HTTP Authentication.
 The user credentials are set using the parameters Admin Username and Password(or use default username password which is obviously not secure).
+
+#### Let's encrypt/Certbot
+
+Use ssl-dns-route53.sh to install certbot and issue SSL certificates automatically by DNS challenge with AWS Route53 Integration.
+This requires a IAM user with valid Access Key and Secret having access to AmazonRoute53FullAccess Policy
+
+**Usage Example**
+```
+./ssl-dns-route53.sh -w=example.com -rak=access_key -ras=access_secret
+```
+
+**Parameters**
+| Option | Type | Description | Default Value
+| ------ | ------ | ----- | ----- |
+| -w or --website | String | Website name | example.com |
+| -asd or --adminsd  | String | Admin SubDomain | tools |
+| -osd or --originsd  | String | Origin SubDomain for CDN | origin |
+| -rak or --r53-access-key  | String | AWS Access Key | Null |
+| -ras= or --r53-access-secret  | String | AWS Access Secret | Null |
+
+For other DNS services use ssl-dns.sh with same parameters as above (excluding AWS credentials). In this method, you'll be asked to manually add TXT record for your domains and subdomains for verification.
+
+You may also use ssl-dns-route53-manual.sh and ssl-dns-manual.sh files to copy paste to SSH console manually to have more control.
+
+**Certbot Renewal**
+
+Only route53 method is eligible to renew as the other method is a manual process.
+You can test run renewal by running
+```
+certbot renew --dry-run
+```
+
+If the test run is success, you can now actually renew the certificates
+```
+certbot -q renew --renew-hook 'service nginx reload'
+```
+
+You may also add this to your crontab to run the renewal script periodically
+```
+#open crontab
+crontab -e
+#select 2 to select nano
+#add the following to the bottom and save - CTLR+X
+30 2 * * 1 certbot -q renew --renew-hook 'service nginx reload'
+```
