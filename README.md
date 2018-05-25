@@ -99,7 +99,7 @@ This requires a IAM user with valid Access Key and Secret having access to Amazo
 | -asd or --adminsd  | String | Admin SubDomain | tools |
 | -osd or --originsd  | String | Origin SubDomain for CDN | origin |
 | -rak or --r53-access-key  | String | AWS Access Key | Null |
-| -ras= or --r53-access-secret  | String | AWS Access Secret | Null |
+| -ras or --r53-access-secret  | String | AWS Access Secret | Null |
 
 For other DNS services use ssl-dns.sh with same parameters as above (excluding AWS credentials). In this method, you'll be asked to manually add TXT record for your domains and subdomains for verification.
 
