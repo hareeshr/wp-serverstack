@@ -7,6 +7,8 @@ DIR=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
 WEBSITE="example.com"
 #default admin subwebsite
 ADMINSD="tools"
+#default origin subwebsite
+ORIGINSD="origin"
 #default IP address
 IP="127.0.0.1"
 
@@ -78,6 +80,9 @@ case $i in
     ADMINSD="${i#*=}"
     shift
     ;;
+    -osd=*|--originsd=*)
+    ORIGINSD="${i#*=}"
+    shift
     ;;
     -au=*|--adminuser=*)
     ADMIN_USER="${i#*=}"
@@ -211,6 +216,7 @@ sudo cp "$DIR"/html/* /var/www/html
 #Edit website name
 sudo sed -i "s/example.com/$WEBSITE/g" /etc/nginx/sites-available/default
 sudo sed -i "s/tools/$ADMINSD/g" /etc/nginx/sites-available/default
+sudo sed -i "s/origin/$ORIGINSD/g" /etc/nginx/sites-available/default
 sudo sed -i "s/example.com/$WEBSITE/g" /etc/nginx/snippets/ssl-example.com.conf
 sudo mv /etc/nginx/snippets/ssl-example.com.conf /etc/nginx/snippets/ssl-"$WEBSITE".conf
 #Make cache directory

@@ -51,6 +51,7 @@ for example: the website name, FTP username, Database Name
 | -asd or --adminsd  | String | Admin SubDomain | tools |
 | -au or --adminuser  | String | Admin Username | adminname |
 | -ap or --adminpass  | String | Admin Password | adminpass |
+| -osd or --originsd  | String | Origin SubDomain for CDN | origin |
 
 
 **Installation Example**
