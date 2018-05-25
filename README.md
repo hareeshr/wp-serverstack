@@ -125,3 +125,58 @@ crontab -e
 #add the following to the bottom and save - CTLR+X
 30 2 * * 1 certbot -q renew --renew-hook 'service nginx reload'
 ```
+
+#### Useful SSH Codes
+
+| Option | Description |
+| ------ | ------ |
+| sudo netstat -plnt | Check running ports |
+| sudo rm file | remove file |
+| sudo rm -d folder/ | remove directory |
+| sudo rm -d -rf folder/ | remove directory recursively |
+| sudo cp inifile destfolder/ | copy file |
+| sudo cp -r inifolder/* destfolder/ | copy recursively |
+| sudo unzip myzip.zip | unzip file |
+| sudo zip -r myfiles.zip folder | zip folder recursively |
+| du -m filename | size of filename |
+| wget -c remotefile | download remote file |
+| wget -c remotefile -O renamefile | download remote file and rename |
+| sudo chown -R www-data:www-data /var/www | set owner user and group of folder |
+| sudo chmod -R g+w /var/www | grant permission |
+| tail -f /var/log/nginx/error.log | nginx error log |
+| >/var/log/nginx/error.log | empty nginx error log |
+| crontab -l | list all cronjob |
+| crontab -e | open crontab file |
+| sudo rm -d -rf /etc/nginx/cache | purge cache |
+| certbot certificates | list all ssl certificates |
+| certbot renew --dry-run | test run SSL renewal script |
+
+```
+certbot -q renew --renew-hook 'service nginx reload' 			//run SSL renewal script
+crontab -e
+30 2 * * 1 certbot -q renew --renew-hook 'service nginx reload' // cronjob
+
+sudo systemctl status nginx.service
+sudo systemctl stop nginx.service
+sudo systemctl start nginx.service
+sudo systemctl restart nginx.service
+sudo systemctl enable nginx.service
+
+sudo systemctl status php7.2-fpm
+sudo systemctl stop php7.2-fpm
+sudo systemctl start php7.2-fpm
+sudo systemctl restart php7.2-fpm
+sudo systemctl enable php7.2-fpm
+
+sudo systemctl status mysql.service
+sudo systemctl stop mysql.service
+sudo systemctl start mysql.service
+sudo systemctl restart mysql.service
+sudo systemctl enable mysql.service
+
+sudo systemctl status vsftpd.service
+sudo systemctl stop vsftpd.service
+sudo systemctl start vsftpd.service
+sudo systemctl restart vsftpd.service
+sudo systemctl enable vsftpd.service
+```
