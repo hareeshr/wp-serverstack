@@ -126,7 +126,7 @@ crontab -e
 30 2 * * 1 certbot -q renew --renew-hook 'service nginx reload'
 ```
 
-#### Useful SSH Codes
+#### Useful SSH Commands
 
 | Option | Description |
 | ------ | ------ |
@@ -149,6 +149,7 @@ crontab -e
 | crontab -e | open crontab file |
 | sudo rm -d -rf /etc/nginx/cache | purge cache |
 | certbot certificates | list all ssl certificates |
+| certbot delete --cert-name website.com | delete ssl certificate for website.com |
 | certbot renew --dry-run | test run SSL renewal script |
 
 ```
