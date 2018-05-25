@@ -153,28 +153,35 @@ crontab -e
 | certbot renew --dry-run | test run SSL renewal script |
 
 ```
-certbot -q renew --renew-hook 'service nginx reload' 			//run SSL renewal script
-crontab -e
-30 2 * * 1 certbot -q renew --renew-hook 'service nginx reload' // cronjob
+#run SSL renewal script
+certbot -q renew --renew-hook 'service nginx reload'
 
+#cronjob
+crontab -e
+30 2 * * 1 certbot -q renew --renew-hook 'service nginx reload'
+
+#nginx service commands
 sudo systemctl status nginx.service
 sudo systemctl stop nginx.service
 sudo systemctl start nginx.service
 sudo systemctl restart nginx.service
 sudo systemctl enable nginx.service
 
+#PHP service commands
 sudo systemctl status php7.2-fpm
 sudo systemctl stop php7.2-fpm
 sudo systemctl start php7.2-fpm
 sudo systemctl restart php7.2-fpm
 sudo systemctl enable php7.2-fpm
 
+#MySQL service commands
 sudo systemctl status mysql.service
 sudo systemctl stop mysql.service
 sudo systemctl start mysql.service
 sudo systemctl restart mysql.service
 sudo systemctl enable mysql.service
 
+#VsFTPd service commands
 sudo systemctl status vsftpd.service
 sudo systemctl stop vsftpd.service
 sudo systemctl start vsftpd.service
