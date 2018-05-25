@@ -92,6 +92,7 @@ This requires a IAM user with valid Access Key and Secret having access to Amazo
 ```
 
 **Parameters**
+
 | Option | Type | Description | Default Value
 | ------ | ------ | ----- | ----- |
 | -w or --website | String | Website name | example.com |
