@@ -8,6 +8,33 @@ ADMINSD="tools"
 ORIGINSD="origin"
 
 
+for i in "$@"
+do
+case $i in
+    -w=*|--website=*)
+    WEBSITE="${i#*=}"
+    shift
+    ;;
+    -asd=*|--adminsd=*)
+    ADMINSD="${i#*=}"
+    shift
+    ;;
+    -osd=*|--originsd=*)
+    ORIGINSD="${i#*=}"
+    shift
+    ;;
+
+    --default)
+    DEFAULT=YES
+    shift # past argument with no value
+    ;;
+    *)
+    # unknown option
+    ;;
+esac
+done
+
+
 ########## Issue Key by DNS Challenge #################
 
 # DNS Challenge

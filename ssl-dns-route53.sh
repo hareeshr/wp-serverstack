@@ -15,6 +15,39 @@ R53ACCK="origin"
 R53ACCS="origin"
 
 
+for i in "$@"
+do
+case $i in
+    -w=*|--website=*)
+    WEBSITE="${i#*=}"
+    shift
+    ;;
+    -asd=*|--adminsd=*)
+    ADMINSD="${i#*=}"
+    shift
+    ;;
+    -osd=*|--originsd=*)
+    ORIGINSD="${i#*=}"
+    shift
+    ;;
+    -rak=*|--r53-access-key=*)
+    R53ACCK="${i#*=}"
+    shift
+    ;;
+    -ras=*|--r53-access-secret=*)
+    R53ACCS="${i#*=}"
+    shift
+    ;;
+
+    --default)
+    DEFAULT=YES
+    shift # past argument with no value
+    ;;
+    *)
+    # unknown option
+    ;;
+esac
+done
 ############################################
 ############## Installation ################
 ############################################
