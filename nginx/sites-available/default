@@ -37,7 +37,7 @@ server {
 		set $skip_cache 1;
 	}
 	# Don't cache url's containing the following segments
-	if ($request_uri ~* "/wp-admin/|/xmlrpc.php|wp-.*.php|/feed/|index.php|sitemap(_index)?.xml") {
+	if ($request_uri ~* "/wp-admin/|/xmlrpc.php|wp-.*.php|/feed/|index.php|robots.txt|sitemap(_index)?.xml") {
 		set $skip_cache 1;
 	}
 	# Don't use the cache for logged in users or recent commenters
