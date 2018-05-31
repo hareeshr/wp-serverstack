@@ -94,8 +94,8 @@ server {
 	}
 }
 server {
-	listen 5062;
-	listen [::]:5062;
+	listen 5062 ssl;
+	listen [::]:5062 ssl;
 
 	include snippets/ssl-example.com.conf;
 	include snippets/ssl-params.conf;
