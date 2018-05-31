@@ -62,8 +62,8 @@ cd /
 
 ########## Install File manager ############
 
-sudo mkdir /var/www/admin/filemanger
-cd /var/www/admin/filemanger
+sudo mkdir /var/www/admin/filemanager
+cd /var/www/admin/filemanager
 sudo git clone https://github.com/prasathmani/tinyfilemanager
 sudo mv tinyfilemanager/tinyfilemanager.php index.php
 sudo rm -r tinyfilemanager
