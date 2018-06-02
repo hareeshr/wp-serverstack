@@ -56,6 +56,9 @@ server {
 		fastcgi_cache mywp;
 		include fastcgi_params;
 		add_header X-ng-Cache $upstream_cache_status;
+        if ( $skip_cache = 0 ) {
+            expires 6M;
+        }
 	}
 
 	#w3tc nginx config file
