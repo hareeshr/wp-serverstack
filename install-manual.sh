@@ -180,6 +180,12 @@ sudo echo "ftpuser" | sudo tee -a /etc/vsftpd.userlist
 sudo sed -i "s/<ip_address>/127.0.0.1/g" /etc/vsftpd.conf
 sudo service vsftpd restart
 
+########## Simple File Manager Config ############
+
+#set username with md5 hashed password
+#set $root_path as "/var/www"
+nano /var/www/admin/filemanager/index.php
+
 ########## Admin Folder Password ######################
 
 #change adminname to Username for Admin Panel

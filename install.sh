@@ -33,6 +33,11 @@ ADMIN_USER="adminname"
 #default admin pass
 ADMIN_PASS="adminpass"
 
+#default filemanager user
+FILEM_USER="admin"
+#default filemanager pass
+FILEM_PASS="admin"
+
 for i in "$@"
 do
 case $i in
@@ -90,6 +95,15 @@ case $i in
     ;;
     -ap=*|--adminpass=*)
     ADMIN_PASS="${i#*=}"
+    shift
+    ;;
+
+    -fmu=*|--filemuser=*)
+    FILEM_USER="${i#*=}"
+    shift
+    ;;
+    -fmp=*|--filempass=*)
+    FILEM_PASS="${i#*=}"
     shift
     ;;
 
@@ -280,6 +294,16 @@ sudo cp "$DIR"/vsftpd/vsftpd.conf /etc/
 sudo echo "$FTP_USER" | sudo tee -a /etc/vsftpd.userlist
 sudo sed -i "s/<ip_address>/$IP/g" /etc/vsftpd.conf
 sudo service vsftpd restart
+
+########## Simple File Manager Config ############
+
+sed -i "/\/\/12345/d" /var/www/admin/filemanager/index.php
+sed -i 's/$root_path = $_SERVER.*/$root_path = "\/var\/www";/g' /var/www/admin/filemanager/index.php
+
+FILEMD_PASS=$(echo -n $FILEM_PASS | md5sum | cut -f1 -d' ')
+FILEMD_USER="'$FILEM_USER' => '$FILEMD_PASS',";
+sed -i "s/.*\/\/admin/$FILEMD_USER/g" /var/www/admin/filemanager/index.php
+
 
 ########## Admin Folder Password ######################
 
